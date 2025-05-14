@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { API_URL } from "@/utils/bakend";
 import axios from "axios";
 import Link from "next/link";
-import Image from 'next/image';
 // Componente de carga
 function LoadingSpinner() {
   return (
