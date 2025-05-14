@@ -81,7 +81,7 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
   const [error, setError] = useState<string | null>(null);
   const [debugResponse, setDebugResponse] = useState<any>(null);
   const [selectedCarId, setSelectedCarId] = useState<number | null>(null);
-  const [stats, setStats] = useState<{total: number, autos_con_placa: number} | null>(null);
+  const [stats, setStats] = useState<{ total: number, autos_con_placa: number } | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -97,26 +97,26 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
             Authorization: `Bearer ${token}`
           }
         });
-        
+
         if (!response.ok) {
           const errorText = await response.text();
           console.error("Error de API:", response.status, errorText);
           throw new Error(`Error al obtener los autos: ${response.status} ${errorText}`);
         }
-        
+
         const data = await response.json();
         console.log("Respuesta del backend:", data);
         setDebugResponse(data);
-        
+
         if (!data.autos || !Array.isArray(data.autos)) {
           throw new Error('Formato de respuesta inválido: no se encontró el arreglo "autos"');
         }
-        
-        
+
+
         const formattedCars: Car[] = data.autos.map((car: BackendCarResponse) => {
           console.log("Procesando auto:", car);
-          
-          
+
+
           return {
             id: car.id,
             vim: car.vim || car.vin || '',
@@ -130,11 +130,11 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
             precio_por_dia: car.precio_por_dia || 0,
             num_mantenimientos: car.num_mantenimientos || 0,
             transmision: car.transmision || car.transmicion || '',
-            
-            estado: car.estado === 'Disponible' ? 'DISPONIBLE' : 
-                   car.estado === 'Reservado' ? 'RESERVADO' : 'MANTENIMIENTO',
-            
-            
+
+            estado: car.estado === 'Disponible' ? 'DISPONIBLE' :
+              car.estado === 'Reservado' ? 'RESERVADO' : 'MANTENIMIENTO',
+
+
             direccion: {
               calle: car.direccion || '',
               num_casa: car.num_casa || '',
@@ -145,31 +145,31 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
                 }
               }
             },
-            
-           
-            combustiblesporCarro: car.combustibles ? 
+
+
+            combustiblesporCarro: car.combustibles ?
               car.combustibles.map(c => ({
                 combustible: { tipoDeCombustible: c.tipoDeCombustible }
               })) : [],
-            
-            
-            caracteristicasAdicionalesCarro: car.caracteristicas ? 
+
+
+            caracteristicasAdicionalesCarro: car.caracteristicas ?
               car.caracteristicas.map(c => ({
                 carasteristicasAdicionales: { nombre: c.nombre }
               })) : [],
-            
-           
-            imagenes: car.imagenes ? 
+
+
+            imagenes: car.imagenes ?
               car.imagenes.map(img => ({
                 data: img.url,
                 public_id: img.public_id
               })) : []
           };
         });
-        
+
         console.log("Autos formateados:", formattedCars);
         setCars(formattedCars);
-        
+
         setStats({
           total: data.total || 0,
           autos_con_placa: data.autos_con_placa || 0
@@ -212,45 +212,43 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Tablero de Estado de Automóviles</h1>
-      
-      {/* Listado de vehículos en tarjetas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Tablero de Estado de Automóviles</h1>
+
+      {/* Listado de vehículos */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {cars.map((car) => (
-          <div 
+          <div
             key={car.id}
-            className={`border rounded-lg p-4 cursor-pointer transition-all ${
-              selectedCarId === car.id 
-                ? 'border-blue-500 ring-2 ring-blue-200 bg-blue-50' 
+            className={`border rounded-lg p-3 sm:p-4 cursor-pointer transition-all ${selectedCarId === car.id
+                ? 'border-blue-500 ring-2 ring-blue-200 bg-blue-50'
                 : 'hover:border-gray-300 hover:bg-gray-50'
-            }`}
+              }`}
             onClick={() => setSelectedCarId(car.id)}
           >
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-bold text-lg">{car.marca} {car.modelo}</h3>
-                <p className="text-gray-600">{car.anio} • {car.placa}</p>
+                <h3 className="font-bold text-base sm:text-lg">{car.marca} {car.modelo}</h3>
+                <p className="text-gray-600 text-sm sm:text-base">{car.anio} • {car.placa}</p>
               </div>
-              <span className={`px-2 py-1 text-xs rounded-full ${
-                car.estado === 'DISPONIBLE' 
-                  ? 'bg-green-100 text-green-800' 
+              <span className={`px-2 py-1 text-xs rounded-full ${car.estado === 'DISPONIBLE'
+                  ? 'bg-green-100 text-green-800'
                   : car.estado === 'RESERVADO'
                     ? 'bg-yellow-100 text-yellow-800'
                     : 'bg-red-100 text-red-800'
-              }`}>
+                }`}>
                 {car.estado}
               </span>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+            <div className="mt-2 grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
               <div><span className="text-gray-500">Transmisión:</span> {car.transmision}</div>
               <div><span className="text-gray-500">Precio/día:</span> ${car.precio_por_dia}</div>
               <div>
-                <span className="text-gray-500">Combustible:</span> 
+                <span className="text-gray-500">Combustible:</span>
                 {car.combustiblesporCarro && car.combustiblesporCarro[0]?.combustible?.tipoDeCombustible || 'No especificado'}
               </div>
               <div>
-                <span className="text-gray-500">Ciudad:</span> 
+                <span className="text-gray-500">Ciudad:</span>
                 {car.direccion?.provincia?.ciudad?.nombre || 'Ciudad no especificada'}
               </div>
             </div>
@@ -260,24 +258,24 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
 
       {/* Detalle del vehículo seleccionado */}
       {selectedCar ? (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex justify-between items-start mb-4">
-            <h2 className="text-xl font-semibold">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+          <div className="flex justify-between items-start mb-3 sm:mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold">
               {selectedCar.marca} {selectedCar.modelo} ({selectedCar.anio})
             </h2>
-            <button 
+            <button
               onClick={() => setSelectedCarId(null)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 text-sm sm:text-base"
             >
               Cerrar detalle
             </button>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="bg-gray-50 p-4 rounded">
-                <h3 className="font-medium text-gray-700 mb-2">Información del Vehículo</h3>
-                <div className="space-y-2">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="bg-gray-50 p-3 sm:p-4 rounded">
+                <h3 className="font-medium text-gray-700 mb-1 sm:mb-2">Información del Vehículo</h3>
+                <div className="space-y-1 sm:space-y-2 text-sm sm:text-base">
                   <p><strong>VIM:</strong> {selectedCar.vim}</p>
                   <p><strong>Placa:</strong> {selectedCar.placa || 'No registrada'}</p>
                   <p><strong>Transmisión:</strong> {selectedCar.transmision}</p>
@@ -286,57 +284,58 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
                   <p><strong>Mantenimientos:</strong> {selectedCar.num_mantenimientos}</p>
                 </div>
               </div>
-              
-              <div className="bg-gray-50 p-4 rounded">
-                <h3 className="font-medium text-gray-700 mb-2">Ubicación</h3>
-                <p>{selectedCar.direccion?.calle} {selectedCar.direccion?.num_casa && `#${selectedCar.direccion.num_casa}`}</p>
-                <p>{selectedCar.direccion?.provincia?.ciudad?.nombre || 'Ciudad no especificada'}</p>
+
+              <div className="bg-gray-50 p-3 sm:p-4 rounded">
+                <h3 className="font-medium text-gray-700 mb-1 sm:mb-2">Ubicación</h3>
+                <div className="text-sm sm:text-base">
+                  <p>{selectedCar.direccion?.calle} {selectedCar.direccion?.num_casa && `#${selectedCar.direccion.num_casa}`}</p>
+                  <p>{selectedCar.direccion?.provincia?.ciudad?.nombre || 'Ciudad no especificada'}</p>
+                </div>
               </div>
             </div>
-            
-            <div className="space-y-4">
-              <div className={`p-4 rounded ${
-                selectedCar.estado === 'DISPONIBLE' 
-                  ? 'bg-green-50 border-green-200' 
+
+            <div className="space-y-3 sm:space-y-4">
+              <div className={`p-3 sm:p-4 rounded ${selectedCar.estado === 'DISPONIBLE'
+                  ? 'bg-green-50 border-green-200'
                   : selectedCar.estado === 'RESERVADO'
                     ? 'bg-yellow-50 border-yellow-200'
                     : 'bg-red-50 border-red-200'
-              } border`}>
-                <h3 className="font-medium text-gray-700 mb-2">Estado Actual</h3>
+                } border`}>
+                <h3 className="font-medium text-gray-700 mb-1 sm:mb-2">Estado Actual</h3>
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-semibold">{selectedCar.estado}</span>
-                  <div className="text-3xl">
-                    {selectedCar.estado === 'DISPONIBLE' ? '✅' : 
-                     selectedCar.estado === 'RESERVADO' ? '🕒' : '⛔'}
+                  <span className="text-base sm:text-lg font-semibold">{selectedCar.estado}</span>
+                  <div className="text-2xl sm:text-3xl">
+                    {selectedCar.estado === 'DISPONIBLE' ? '✅' :
+                      selectedCar.estado === 'RESERVADO' ? '🕒' : '⛔'}
                   </div>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded border border-blue-100">
-                  <p className="text-sm text-blue-600">Precio por día</p>
-                  <p className="text-2xl font-bold">${selectedCar.precio_por_dia}</p>
+
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="bg-blue-50 p-3 sm:p-4 rounded border border-blue-100">
+                  <p className="text-xs sm:text-sm text-blue-600">Precio por día</p>
+                  <p className="text-xl sm:text-2xl font-bold">${selectedCar.precio_por_dia}</p>
                 </div>
-                <div className="bg-purple-50 p-4 rounded border border-purple-100">
-                  <p className="text-sm text-purple-600">Combustible</p>
-                  <p className="text-2xl font-bold">
+                <div className="bg-purple-50 p-3 sm:p-4 rounded border border-purple-100">
+                  <p className="text-xs sm:text-sm text-purple-600">Combustible</p>
+                  <p className="text-xl sm:text-2xl font-bold">
                     {selectedCar.combustiblesporCarro && selectedCar.combustiblesporCarro[0]?.combustible?.tipoDeCombustible || 'No especificado'}
                   </p>
                 </div>
               </div>
-              
-              <div className="bg-yellow-50 p-4 rounded border border-yellow-100">
-                <h3 className="font-medium text-gray-700 mb-2">Características</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCar.caracteristicasAdicionalesCarro && 
-                   selectedCar.caracteristicasAdicionalesCarro.length > 0 ? (
+
+              <div className="bg-yellow-50 p-3 sm:p-4 rounded border border-yellow-100">
+                <h3 className="font-medium text-gray-700 mb-1 sm:mb-2">Características</h3>
+                <div className="flex flex-wrap gap-1 sm:gap-2">
+                  {selectedCar.caracteristicasAdicionalesCarro &&
+                    selectedCar.caracteristicasAdicionalesCarro.length > 0 ? (
                     selectedCar.caracteristicasAdicionalesCarro.map((caracteristica, index) => (
-                      <span key={index} className="px-2 py-1 bg-gray-100 rounded text-sm">
+                      <span key={index} className="px-2 py-1 bg-gray-100 rounded text-xs sm:text-sm">
                         {caracteristica.carasteristicasAdicionales.nombre}
                       </span>
                     ))
                   ) : (
-                    <span className="text-sm text-gray-500">No hay características registradas</span>
+                    <span className="text-xs sm:text-sm text-gray-500">No hay características registradas</span>
                   )}
                 </div>
               </div>
@@ -344,7 +343,7 @@ const CarDashboard = ({ hostId }: CarDashboardProps) => {
           </div>
         </div>
       ) : (
-        <div className="bg-gray-50 p-6 rounded-lg text-center text-gray-500">
+        <div className="bg-gray-50 p-4 sm:p-6 rounded-lg text-center text-sm sm:text-base text-gray-500">
           Seleccione un vehículo para ver detalles completos
         </div>
       )}
