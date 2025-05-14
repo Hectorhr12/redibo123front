@@ -496,8 +496,8 @@ export default function CalificacionesAlRenterPage() {
             ) : (
               <>
                 {error && <div className="text-red-500">{error}</div>}
-                <div className="rental-container">
-                  <div className="rental-history-panel">
+                <div className="rental-container flex flex-col lg:flex-row gap-4 p-">
+                  <div className="rental-history-panel w-full lg:w-1/2 max-h-[calc(100vh)] overflow-y-auto">
                     <div className="rental-header">
                       <h2 className="rental-title">Historial de rentas</h2>
                       <div className="rental-count">
@@ -525,7 +525,7 @@ export default function CalificacionesAlRenterPage() {
                           const calificacion = calificaciones.find((c) => c.reservaId === renter.idReserva)
                          
                           return (
-                            <div key={renter.id} className="rental-item">
+                            <div key={renter.id} className="rental-item flex flex-col md:flex-row justify-between gap-4 p-4 bg-gray-100 rounded-xl shadow-sm">
                               <div className="rental-item-left">
                                 <div className="rental-image-placeholder">
                                   <img
@@ -590,7 +590,7 @@ export default function CalificacionesAlRenterPage() {
                                 </div>
                               </div>
 
-                              <div className="rental-item-right">
+                              <div className="rental-item-right ">
                                 <div className="rental-date">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -655,7 +655,7 @@ export default function CalificacionesAlRenterPage() {
                   </div>
 
                   {showRatingPanel && selected && (
-                    <div className="rating-panel">
+                    <div className="rating-panel w-full lg:w-1/2 bg-white p-4 shadow rounded-xl">
                       <div className="rating-panel-header">
                         <div className="rating-user-info">
                           <h3>
@@ -927,7 +927,7 @@ export default function CalificacionesAlRenterPage() {
                   )}
 
                   {!showRatingPanel && (
-                    <div className="empty-rating-panel">
+                    <div className="empty-rating-panel flex flex-col items-center justify-center text-center p-6 bg-gray-50 rounded-xl shadow-md w-full">
                       <div className="empty-rating-icon">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
