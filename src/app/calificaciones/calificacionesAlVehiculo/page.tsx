@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, MouseEvent } from "react"
-import Image from "next/image"
 import { format } from "date-fns"
 import { es } from "date-fns/locale"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -156,7 +155,18 @@ export default function ComentariosPage() {
     if (dateRange && dateRange.from && dateRange.to) {
       filtered = filtered.filter((comment) => {
         const commentDate = new Date(comment.fecha_creacion)
-        return commentDate >= dateRange.from! && commentDate <= dateRange.to!
+        
+        // Establecer todas las horas, minutos y segundos a 0 para comparar solo las fechas
+        const fromDate = new Date(dateRange.from as Date)
+        fromDate.setHours(0, 0, 0, 0)
+        
+        const toDate = new Date(dateRange.to as Date)
+        toDate.setHours(23, 59, 59, 999) // Fin del día para incluir todo el día final
+        
+        const normalizedCommentDate = new Date(commentDate)
+        normalizedCommentDate.setHours(12, 0, 0, 0) // Mediodía para evitar problemas de zona horaria
+        
+        return normalizedCommentDate >= fromDate && normalizedCommentDate <= toDate
       })
     }
 
