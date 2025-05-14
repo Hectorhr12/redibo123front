@@ -27,7 +27,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "express": "^5.1.0",
     "leo-profanity": "^1.7.0",
     "lucide-react": "^0.485.0",
     "next": "15.2.4",
