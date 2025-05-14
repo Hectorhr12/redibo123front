@@ -29,9 +29,9 @@ export function VehiclesInfo() {
       if (!token) return
 
       try {
-        const res = await axios.get<UserProfile>(`${API_URL}/api/perfil`, {
+        const res = await axios.get<UserProfile>(${API_URL}/api/perfil, {
           headers: { 
-            Authorization: `Bearer ${token}` }
+            Authorization: Bearer ${token} }
         })
         setRoles(res.data.roles || [])
       } catch (error) {
@@ -43,28 +43,27 @@ export function VehiclesInfo() {
   }, [])
 
   return (
-    <div className="p-6">
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-center">
+    <div className="p-3 sm:p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 justify-center">
         {roles.includes("HOST") && (
           <>
             <div
-              className="ml-50 w-64 h-32 bg-black text-white hover:bg-gray-900 rounded-xl p-3 text-center shadow-md cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
+              className="w-full max-w-64 h-32 bg-black text-white hover:bg-gray-900 rounded-xl p-3 text-center shadow-md cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out mx-auto"
               onClick={() => router.push("/vehicles/misVehicles")}
             >
-              <SteeringWheel className="mx-auto mb-3 h-10 w-10" />
-              <p className="text-lg font-semibold">Mis Vehículos</p>
+              <SteeringWheel className="mx-auto mb-2 h-10 w-10" />
+              <p className="text-lg font-semibold truncate px-2">Mis Vehículos</p>
             </div>
           </>
         )}
 
         {roles.includes("RENTER") && (
           <div
-            className="w-64 h-32 bg-black text-white hover:bg-gray-900 rounded-xl p-4 text-center shadow-md hover:shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
+            className="w-full max-w-64 h-32 bg-black text-white hover:bg-gray-900 rounded-xl p-3 text-center shadow-md cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out mx-auto"
             onClick={() => router.push("/vehicles/vehiclesRentados")}
           >
-            <SteeringWheel className="mx-auto mb-3 h-10 w-10" />
-            <p className="text-lg font-semibold">Vehículos Rentados</p>
+            <SteeringWheel className="mx-auto mb-2 h-10 w-10" />
+            <p className="text-lg font-semibold truncate px-2">Vehículos Rentados</p>
           </div>
         )}
       </div>
