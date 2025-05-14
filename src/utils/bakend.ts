@@ -1,1 +1,1 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://redibo-backend-1.onrender.com';
+export const API_URL = 'https://redibo123back.onrender.com';
