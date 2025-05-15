@@ -538,8 +538,8 @@ export default function CalificacionesAlRenterPage() {
             ) : (
               <>
                 {error && <div className="text-red-500">{error}</div>}
-                <div className="rental-container">
-                  <div className="rental-history-panel">
+                <div className="rental-container flex flex-col lg:flex-row gap-4 p-">
+                  <div className="rental-history-panel w-full lg:w-1/2 max-h-[calc(100vh)] overflow-y-auto">
                     <div className="rental-header">
                       <h2 className="rental-title">Historial de rentas</h2>
                       <div className="rental-count">
