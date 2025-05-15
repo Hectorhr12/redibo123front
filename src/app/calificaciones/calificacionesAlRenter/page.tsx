@@ -924,6 +924,7 @@ export default function CalificacionesAlRenterPage() {
 
                         <div className="rating-actions">
                           {!selected.rated && estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "") && (
+                            <>
                             <button
                               onClick={handleGuardar}
                               disabled={
@@ -943,6 +944,7 @@ export default function CalificacionesAlRenterPage() {
                                 onClose={() => setShowToast(false)}
                               />
                             )}
+                            </>
                           )}
 
                           {selected.rated && estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "") && (
