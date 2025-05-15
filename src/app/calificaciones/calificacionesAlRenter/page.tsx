@@ -1,5 +1,5 @@
 "use client"
-
+import Toast from "./Toast"
 import { useEffect, useState } from "react"
 import { Trash2, AlertCircle } from "lucide-react"
 import Header from "@/components/ui/Header"
@@ -72,7 +72,7 @@ export default function CalificacionesAlRenterPage() {
   const [error, setError] = useState<string | null>(null)
   const [comentarioOfensivo, setComentarioOfensivo] = useState(false)
   const [usuariosBloqueados, setUsuariosBloqueados] = useState<{[key: string]: boolean}>({})
-
+  const [showToast, setShowToast] = useState(false)
   // Cargar el diccionario de palabras ofensivas
   useEffect(() => {
     try {
@@ -937,6 +937,12 @@ export default function CalificacionesAlRenterPage() {
                             >
                               Guardar calificación
                             </button>
+                            {showToast && (
+                              <Toast
+                                message="¡Guardado exitosamente!"
+                                onClose={() => setShowToast(false)}
+                              />
+                            )}
                           )}
 
                           {selected.rated && estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "") && (
