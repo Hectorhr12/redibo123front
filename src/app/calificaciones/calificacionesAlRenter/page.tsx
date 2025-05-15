@@ -1,13 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Trash2 } from "lucide-react"
+import { Trash2, AlertCircle } from "lucide-react"
 import Header from "@/components/ui/Header"
 import { Footer } from "@/components/ui/footer"
 import leoProfanity from "leo-profanity"
 import { API_URL } from "@/utils/bakend"
 import Image from 'next/image';
 import "./styles.css"
+import { toast } from "sonner"
 
 // Extender la definicion de tipos para leo-profanity
 declare module "leo-profanity" {
@@ -28,6 +29,8 @@ interface Renter {
   fechaFin?: Date
   idReserva?: string
   carImage?: string
+  bloqueado?: boolean
+  motivoBloqueo?: string
 }
 
 interface Calificacion {
@@ -68,6 +71,7 @@ export default function CalificacionesAlRenterPage() {
   const [showRatingPanel, setShowRatingPanel] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [comentarioOfensivo, setComentarioOfensivo] = useState(false)
+  const [usuariosBloqueados, setUsuariosBloqueados] = useState<{[key: string]: boolean}>({})
 
   // Cargar el diccionario de palabras ofensivas
   useEffect(() => {
@@ -126,6 +130,37 @@ export default function CalificacionesAlRenterPage() {
       fetchUserId()
     }
   }, [])
+
+  // Verificar si los usuarios están bloqueados
+  const verificarUsuariosBloqueados = async (usuarios: Renter[]) => {
+    const token = localStorage.getItem("auth_token")
+    if (!token) return
+
+    const bloqueados: {[key: string]: boolean} = {}
+    
+    for (const usuario of usuarios) {
+      try {
+        const response = await fetch(`${API_URL}/api/reportes/usuario-bloqueado/${usuario.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        
+        if (response.ok) {
+          const data = await response.json()
+          bloqueados[usuario.id] = data.bloqueado
+          if (data.bloqueado) {
+            usuario.bloqueado = true
+            usuario.motivoBloqueo = data.motivo
+          }
+        }
+      } catch (error) {
+        console.error("Error al verificar estado del usuario:", error)
+      }
+    }
+    
+    setUsuariosBloqueados(bloqueados)
+  }
 
   // Cargar datos cuando se obtiene el hostId
   useEffect(() => {
@@ -197,12 +232,14 @@ export default function CalificacionesAlRenterPage() {
               fechaFin: rental.fecha_fin,
               rated: !!existingCalificacion,
               carImage,
+              bloqueado: false,
             })
           }
           return acc
         }, [])
 
         setRenters(uniqueRenters)
+        await verificarUsuariosBloqueados(uniqueRenters)
       } catch (error) {
         console.error("Error al cargar datos:", error)
         setError("No se pudieron cargar los datos. ¿Estás autenticado?")
@@ -228,6 +265,11 @@ export default function CalificacionesAlRenterPage() {
   }
 
   function handleSeleccionar(renter: Renter) {
+    if (renter.bloqueado) {
+      toast.error("No se puede calificar a este usuario porque ha sido reportado y verificado")
+      return
+    }
+
     if (renter.rated || estaDentroDePeriodoCalificacion(renter.fechaFin?.toString() || "")) {
       const calificacion = calificaciones.find((c) => c.reservaId === renter.idReserva)
       if (calificacion) {
@@ -496,8 +538,8 @@ export default function CalificacionesAlRenterPage() {
             ) : (
               <>
                 {error && <div className="text-red-500">{error}</div>}
-                <div className="rental-container flex flex-col lg:flex-row gap-4 p-">
-                  <div className="rental-history-panel w-full lg:w-1/2 max-h-[calc(100vh)] overflow-y-auto">
+                <div className="rental-container">
+                  <div className="rental-history-panel">
                     <div className="rental-header">
                       <h2 className="rental-title">Historial de rentas</h2>
                       <div className="rental-count">
@@ -525,7 +567,7 @@ export default function CalificacionesAlRenterPage() {
                           const calificacion = calificaciones.find((c) => c.reservaId === renter.idReserva)
                          
                           return (
-                            <div key={renter.id} className="rental-item flex flex-col md:flex-row justify-between gap-4 p-4 bg-gray-100 rounded-xl shadow-sm">
+                            <div key={renter.id} className="rental-item">
                               <div className="rental-item-left">
                                 <div className="rental-image-placeholder">
                                   <img
@@ -590,7 +632,7 @@ export default function CalificacionesAlRenterPage() {
                                 </div>
                               </div>
 
-                              <div className="rental-item-right ">
+                              <div className="rental-item-right">
                                 <div className="rental-date">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -655,7 +697,7 @@ export default function CalificacionesAlRenterPage() {
                   </div>
 
                   {showRatingPanel && selected && (
-                    <div className="rating-panel w-full lg:w-1/2 bg-white p-4 shadow rounded-xl">
+                    <div className="rating-panel">
                       <div className="rating-panel-header">
                         <div className="rating-user-info">
                           <h3>
@@ -927,7 +969,7 @@ export default function CalificacionesAlRenterPage() {
                   )}
 
                   {!showRatingPanel && (
-                    <div className="empty-rating-panel flex flex-col items-center justify-center text-center p-6 bg-gray-50 rounded-xl shadow-md w-full">
+                    <div className="empty-rating-panel">
                       <div className="empty-rating-icon">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
