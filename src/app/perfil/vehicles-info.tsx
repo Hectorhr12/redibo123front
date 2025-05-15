@@ -23,26 +23,24 @@ export function VehiclesInfo() {
   const [roles, setRoles] = useState<string[]>([])
   const router = useRouter()
 
-useEffect(() => {
-  const fetchRoles = async () => {
-    const token = localStorage.getItem("auth_token")
-    if (!token) return
+  useEffect(() => {
+    const fetchRoles = async () => {
+      const token = localStorage.getItem("auth_token")
+      if (!token) return
 
-    try {
-      const res = await axios.get<UserProfile>(`${API_URL}/api/perfil`, {
-        headers: { 
-          Authorization: `Bearer ${token}` 
-        }
-      })
-      setRoles(res.data.roles || [])
-    } catch (error) {
-      console.error("Error al obtener roles", error)
+      try {
+        const res = await axios.get<UserProfile>(`${API_URL}/api/perfil`, {
+          headers: { 
+            Authorization: `Bearer ${token}` }
+        })
+        setRoles(res.data.roles || [])
+      } catch (error) {
+        console.error("Error al obtener roles", error)
+      }
     }
-  }
 
-  fetchRoles()
-}, [])
-
+    fetchRoles()
+  }, [])
 
   return (
     <div className="p-3 sm:p-6">
