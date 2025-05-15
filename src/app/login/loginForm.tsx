@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { API_URL } from "@/utils/bakend";
 import axios from "axios";
 import Link from "next/link";
+import Image from 'next/image';
 // Componente de carga
 function LoadingSpinner() {
   return (
@@ -30,6 +31,9 @@ function LoginFormContent() {
     setIsLoading(true);
 
     try {
+      // Limpiar cualquier token anterior
+      localStorage.removeItem("auth_token");
+
       const response = await axios.post(`${API_URL}/api/auth/login`, {
         "correo": email,
         "contrasena": password
@@ -41,22 +45,48 @@ function LoginFormContent() {
       }
 
       const { usuario, token } = response.data;
+      
+      if (!token) {
+        toast.error("Error en la autenticación: Token no recibido");
+        return;
+      }
+
+      // Guardar datos del usuario
       localStorage.setItem("nombre", usuario.nombre);
-      // localStorage.setItem("correo", usuario.correo);
-      // localStorage.setItem("telefono", usuario.telefono || "");
-      // localStorage.setItem("fecha_nacimiento", usuario.fecha_nacimiento || "");
-      // localStorage.setItem("genero", usuario.genero || "");
-      // localStorage.setItem("ciudad", usuario.ciudad || "");
       localStorage.setItem("foto", usuario.foto || "default.jpg");
       localStorage.setItem("roles", usuario.roles || "");
       localStorage.setItem("auth_token", token);
 
-      router.push("/");
-      toast.success("Inicio de sesión exitoso");
-    } catch (error: unknown) {
+      // Verificar que el token se guardó correctamente
+      const savedToken = localStorage.getItem("auth_token");
+      if (!savedToken) {
+        toast.error("Error al guardar la sesión");
+        return;
+      }
+
+      // Verificar que el token es válido haciendo una petición de prueba
+      try {
+        await axios.get(`${API_URL}/api/perfil`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        
+        router.push("/");
+        toast.success("Inicio de sesión exitoso");
+      } catch (verifyError) {
+        localStorage.removeItem("auth_token");
+        toast.error("Error al verificar la sesión");
+        throw verifyError;
+      }
+    } catch (error) {
       console.error("Error al iniciar sesión:", error);
-      const errorMessage = "Error al iniciar sesión";
-      toast.error(errorMessage);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.error || "Error al iniciar sesión";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Error al iniciar sesión");
+      }
     } finally {
       setIsLoading(false);
     }
