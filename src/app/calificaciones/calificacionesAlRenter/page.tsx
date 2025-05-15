@@ -567,9 +567,9 @@ export default function CalificacionesAlRenterPage() {
                           const calificacion = calificaciones.find((c) => c.reservaId === renter.idReserva)
                          
                           return (
-                            <div key={renter.id} className="rental-item">
-                              <div className="rental-item-left">
-                                <div className="rental-image-placeholder">
+                            <div key={renter.id} className="rental-item flex flex-col md:flex-row justify-between gap-4 p-4 bg-gray-100 rounded-xl shadow-sm">
+                              <div className="rental-item-left flex gap-3">
+                                <div className="rental-image-placeholder bg-gray-200 w-12 h-12 rounded-full">
                                   <img
                                     src={renter.carImage || "/placeholder_car.svg"}
                                     alt="Imagen del auto"
@@ -697,7 +697,7 @@ export default function CalificacionesAlRenterPage() {
                   </div>
 
                   {showRatingPanel && selected && (
-                    <div className="rating-panel">
+                    <div className="rating-panel w-full lg:w-1/2 bg-white p-4 shadow rounded-xl">
                       <div className="rating-panel-header">
                         <div className="rating-user-info">
                           <h3>
@@ -969,7 +969,7 @@ export default function CalificacionesAlRenterPage() {
                   )}
 
                   {!showRatingPanel && (
-                    <div className="empty-rating-panel">
+                    <div className="empty-rating-panel flex flex-col items-center justify-center text-center p-6 bg-gray-50 rounded-xl shadow-md w-full">
                       <div className="empty-rating-icon">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
