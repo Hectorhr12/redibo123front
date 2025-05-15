@@ -16,10 +16,12 @@ export default function Toast({ message, onClose }: ToastProps) {
   }, [onClose])
 
   return (
-    <div className="fixed top-5 right-5 z-50 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg animate-fade-in">
+    <div className="fixed top-5 right-5 z-50 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg animate-in fade-in slide-in-from-top-5 duration-300">
       <div className="flex justify-between items-center">
         <span>{message}</span>
-        <button onClick={onClose} className="ml-4 font-bold">×</button>
+        <button onClick={onClose} className="ml-4 font-bold">
+          ×
+        </button>
       </div>
     </div>
   )
