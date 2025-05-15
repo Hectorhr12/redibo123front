@@ -199,20 +199,8 @@ export default function RenterReviews({ reviews }: RenterReviewsProps) {
                       ))}
                       <span className="ml-2 text-xs text-muted-foreground">({promedio.toFixed(1)})</span>
                     </div>
-                    <p
-                      className="text-sm cursor-pointer select-none"
-                      onClick={() => setExpandedComment(mostrarExpandido ? null : index)}
-                      title={
-                        comentarioLargo
-                          ? mostrarExpandido
-                            ? "Ocultar comentario"
-                            : "Ver comentario completo"
-                          : undefined
-                      }
-                    >
-                      {comentarioLargo && !mostrarExpandido
-                        ? `${comentarioTexto.slice(0, 120)}...`
-                        : comentarioTexto || "Sin comentarios"}
+                    <p className="text-sm">
+                      {comentarioTexto || "Sin comentarios"}
                     </p>
                   </div>
                 </div>
