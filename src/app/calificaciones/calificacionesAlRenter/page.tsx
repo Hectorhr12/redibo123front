@@ -737,7 +737,7 @@ export default function CalificacionesAlRenterPage() {
                                     key={star}
                                     onClick={() => {
                                       if (
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                       ) {
                                         setRating((prev) => ({ ...prev, comportamiento: star }))
@@ -746,7 +746,7 @@ export default function CalificacionesAlRenterPage() {
                                     className={`star-icon-medium ${star <= rating.comportamiento ? "active" : ""}`}
                                     style={{
                                       cursor:
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
@@ -772,7 +772,7 @@ export default function CalificacionesAlRenterPage() {
                                     key={star}
                                     onClick={() => {
                                       if (
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                       ) {
                                         setRating((prev) => ({ ...prev, cuidado_vehiculo: star }))
@@ -781,7 +781,7 @@ export default function CalificacionesAlRenterPage() {
                                     className={`star-icon-medium ${star <= rating.cuidado_vehiculo ? "active" : ""}`}
                                     style={{
                                       cursor:
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
@@ -807,7 +807,7 @@ export default function CalificacionesAlRenterPage() {
                                     key={star}
                                     onClick={() => {
                                       if (
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                       ) {
                                         setRating((prev) => ({ ...prev, puntualidad: star }))
@@ -816,7 +816,7 @@ export default function CalificacionesAlRenterPage() {
                                     className={`star-icon-medium ${star <= rating.puntualidad ? "active" : ""}`}
                                     style={{
                                       cursor:
-                                        !selected.rated &&
+                                        /*!selected.rated &&*/
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
