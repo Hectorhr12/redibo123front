@@ -53,41 +53,41 @@ export default function MisVehiclesPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="container mx-auto py-8 px-4">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Mis Vehículos</h1>
+      <div className="container mx-auto py-4 sm:py-8 px-3 sm:px-4">
+        <div className="flex justify-between items-center mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold">Mis Vehículos</h1>
           <Link href="/">
-            <Button variant="outline">Atrás</Button>
+            <Button variant="outline" size="sm" className="h-8 px-3 sm:h-10 sm:px-4">Atrás</Button>
           </Link>
         </div>
 
         {isLoading ? (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-24 w-full rounded-lg" />
+              <Skeleton key={i} className="h-20 sm:h-24 w-full rounded-lg" />
             ))}
           </div>
         ) : hostId ? (
           <CarDashboard hostId={hostId} />
         ) : (
-          <div className="text-center py-8">
+          <div className="text-center py-6 sm:py-8">
             {!localStorage.getItem("id") ? (
               <>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 text-sm sm:text-base">
                   No hay sesión activa. Por favor, inicie sesión.
                 </p>
-                <div className="mb-4 p-4 border rounded bg-gray-50 text-sm">
+                <div className="mb-4 p-3 sm:p-4 border rounded bg-gray-50 text-xs sm:text-sm">
                   <h3 className="font-semibold mb-2">Información de depuración:</h3>
-                  <pre className="whitespace-pre-wrap text-left">
+                  <pre className="whitespace-pre-wrap text-left overflow-auto max-h-40">
                     {JSON.stringify(authInfo, null, 2)}
                   </pre>
                 </div>
                 <Link href="/login">
-                  <Button>Iniciar sesión</Button>
+                  <Button size="sm" className="sm:h-10 h-9">Iniciar sesión</Button>
                 </Link>
               </>
             ) : (
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm sm:text-base">
                 No se pudo cargar la información del host
               </p>
             )}
