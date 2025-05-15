@@ -393,7 +393,7 @@ export default function CalificacionesAlRenterPage() {
             : r
         )
       )
-
+      setShowToast(true)
       setShowRatingPanel(false)
       setSelected(null)
       setRating({
