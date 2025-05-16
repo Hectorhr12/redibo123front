@@ -521,6 +521,12 @@ export default function CalificacionesAlRenterPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      {showToast && (
+        <Toast
+          message="¡Guardado exitosamente!"
+          onClose={() => setShowToast(false)}
+        />
+      )}
       <main className="flex-1 container mx-auto py-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Calificaciones al Arrendatario</h1>
 
@@ -938,12 +944,7 @@ export default function CalificacionesAlRenterPage() {
                             >
                               Guardar calificación
                             </button>
-                            {showToast && (
-                              <Toast
-                                message="¡Guardado exitosamente!"
-                                onClose={() => setShowToast(false)}
-                              />
-                            )}
+                            
                             </>
                           )}
 
