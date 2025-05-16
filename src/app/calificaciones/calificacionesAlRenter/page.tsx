@@ -31,6 +31,8 @@ interface Renter {
   carImage?: string
   bloqueado?: boolean
   motivoBloqueo?: string
+  carMake?: string
+  carModel?: string
 }
 
 interface Calificacion {
@@ -233,6 +235,8 @@ export default function CalificacionesAlRenterPage() {
               rated: !!existingCalificacion,
               carImage,
               bloqueado: false,
+              carMake: rental.carro?.marca,
+              carModel: rental.carro?.model,
             })
           }
           return acc
@@ -528,7 +532,7 @@ export default function CalificacionesAlRenterPage() {
         />
       )}
       <main className="flex-1 container mx-auto py-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Calificaciones al Arrendatario</h1>
+        <h1 className="text-2xl font-bold text-gray-800 ml-8">Calificaciones al Arrendatario</h1>
 
         {!hostId ? (
           <div className="text-center py-10">
@@ -545,7 +549,7 @@ export default function CalificacionesAlRenterPage() {
               <>
                 {error && <div className="text-red-500">{error}</div>}
                 <div className="rental-container flex flex-col lg:flex-row gap-4 p-">
-                  <div className="rental-history-panel w-full lg:w-1/2 max-h-[calc(100vh)] overflow-y-auto">
+                  <div className="rental-history-panel w-full lg:w-1/2 bg-white p-4 shadow rounded-xl">
                     <div className="rental-header">
                       <h2 className="rental-title">Historial de rentas</h2>
                       <div className="rental-count">
@@ -594,7 +598,7 @@ export default function CalificacionesAlRenterPage() {
                                     {renter.firstName} {renter.lastName}
                                   </div>
                                   <div className="rental-car-info">
-                                    {renter.firstName} {renter.lastName}
+                                    {renter.carModel} {renter.carMake}
                                   </div>
                                   <div className="rental-status">
                                     {calificacion ? (
@@ -707,9 +711,24 @@ export default function CalificacionesAlRenterPage() {
                       <div className="rating-panel-header">
                         <div className="rating-user-info">
                           <h3>
-                            {selected.firstName} {selected.lastName}
+                            {selected.carMake} {selected.carModel}
                           </h3>
-                          <div className="rating-date">
+                           <div className="rating-car-status">Completado</div>
+                        </div>
+
+                        <div className="rating-car-details">
+                          <div className="rental-image-placeholder">
+                            <img
+                              src={selected?.profilePicture || "/placeholder_car.svg"}
+                              alt="Imagen del auto"
+                              style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 4 }}
+                            />
+                          </div>
+                          <div className="rating-car-info">
+                            <div className="rating-car-model">
+                               {selected.firstName} {selected.lastName}
+                            </div>
+                            <div className="rating-date">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
@@ -728,21 +747,6 @@ export default function CalificacionesAlRenterPage() {
                             </svg>
                             <span>{formatDate(selected.fechaFin?.toString() || "")}</span>
                           </div>
-                        </div>
-
-                        <div className="rating-car-details">
-                          <div className="rental-image-placeholder">
-                            <img
-                              src={selected?.carImage || "/placeholder_car.svg"}
-                              alt="Imagen del auto"
-                              style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 4 }}
-                            />
-                          </div>
-                          <div className="rating-car-info">
-                            <div className="rating-car-model">
-                              {selected.firstName} {selected.lastName}
-                            </div>
-                            <div className="rating-car-status">Completado</div>
                           </div>
                         </div>
                       </div>
