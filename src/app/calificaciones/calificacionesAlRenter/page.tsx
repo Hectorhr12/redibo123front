@@ -75,6 +75,7 @@ export default function CalificacionesAlRenterPage() {
   const [comentarioOfensivo, setComentarioOfensivo] = useState(false)
   const [usuariosBloqueados, setUsuariosBloqueados] = useState<{[key: string]: boolean}>({})
   const [showToast, setShowToast] = useState(false)
+  const [showToastEliminacion,setShowToastEliminacion]=useState(false)
   // Cargar el diccionario de palabras ofensivas
   useEffect(() => {
     try {
@@ -452,7 +453,7 @@ export default function CalificacionesAlRenterPage() {
       if (!response.ok) {
         throw new Error("Error al borrar la calificación")
       }
-
+      
       // Actualizar la lista de calificaciones
       setCalificaciones(
         calificaciones.filter((c) => c.id !== calificacion.id)
@@ -466,8 +467,9 @@ export default function CalificacionesAlRenterPage() {
             : r
         )
       )
-
       if (selected?.id === renter.id) {
+       
+        setShowToastEliminacion(true)
         setShowRatingPanel(false)
         setSelected(null)
         setRating({
@@ -528,7 +530,13 @@ export default function CalificacionesAlRenterPage() {
       {showToast && (
         <Toast
           message="¡Guardado exitosamente!"
-          onClose={() => setShowToast(false)}
+          onCloseAction={() => setShowToast(false)}
+        />
+      )}
+      {showToastEliminacion && (
+        <Toast
+          message="¡Eliminación exitosa!"
+          onCloseAction={() => setShowToastEliminacion(false)}
         />
       )}
       <main className="flex-1 container mx-auto py-8">
