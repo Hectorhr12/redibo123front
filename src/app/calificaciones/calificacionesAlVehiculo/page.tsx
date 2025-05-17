@@ -236,7 +236,7 @@ export default function ComentariosPage() {
       stars.push(
         <Star
           key={`full-${i}`}
-          className="w-4 h-4 fill-amber-400 text-black"
+          className="w-4 h-4 fill-black text-black"
         />
       );
     }
