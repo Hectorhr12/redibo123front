@@ -327,7 +327,8 @@
 
 .rating-score-note {
   font-size: 16px;
-  color: #6b7280;
+  color: #000000;
+
 }
 
 .rating-categories {
@@ -362,7 +363,7 @@
 
 .rating-category-question {
   font-size: 12px;
-  color: #6b7280;
+  color: #000000;
   font-weight: normal;
 }
 
@@ -378,11 +379,11 @@
 }
 
 .star-icon-medium:hover {
-  color: #facc15;
+  color: #000000;
 }
 
 .star-icon-medium.active {
-  color: #facc15;
+  color: #000000;
 }
 
 .rating-actions {
