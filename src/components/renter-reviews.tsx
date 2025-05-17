@@ -194,7 +194,7 @@ export default function RenterReviews({ reviews }: RenterReviewsProps) {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${i < Math.round(promedio) ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
+                          className={`h-4 w-4 ${i < Math.round(promedio) ? "text-black fill-black" : "text-gray-300"}`}
                         />
                       ))}
                       <span className="ml-2 text-xs text-muted-foreground">({promedio.toFixed(1)})</span>
