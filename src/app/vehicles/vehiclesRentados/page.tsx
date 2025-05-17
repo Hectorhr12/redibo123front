@@ -151,7 +151,7 @@ export default function VehiclesRentadosPage() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="container mx-auto py-8 px-4 flex-1">
-        <h1 className="text-2xl font-bold mb-6">Vehículos Rentados</h1>
+        <h1 className="text-2xl font-bold mb-6">Actividad de mis vehículos</h1>
 
         {isLoading ? (
           <div className="flex justify-center items-center min-h-[400px]">
