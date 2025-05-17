@@ -287,7 +287,7 @@ export default function RenterDetails() {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <span
                           key={star}
-                          style={{ color: star <= Math.round(rating) ? "#facc15" : "#e5e7eb", fontSize: 20 }}
+                          style={{ color: star <= Math.round(rating) ? "#000000" : "#e5e7eb", fontSize: 20 }}
                         >
                           ★
                         </span>
