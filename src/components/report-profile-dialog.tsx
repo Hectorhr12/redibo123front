@@ -59,15 +59,15 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
 
     if (isOpen) {
       checkPreviousReports()
-      setReachedDailyLimit(false) // Resetear el estado del límite diario al abrir
+      setReachedDailyLimit(false) 
     }
   }, [renterId, isOpen])
 
   const handleAdditionalInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
-    if (text.length <= maxLength) {
-      setAdditionalInfo(text)
-    }
+   
+    const cleanedText = text.substring(0, maxLength)
+    setAdditionalInfo(cleanedText)
   }
 
   const handleSubmit = async () => {
@@ -84,6 +84,12 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
 
     if (additionalInfo.length > maxLength) {
       toast.error(`La información adicional no puede exceder los ${maxLength} caracteres`)
+      return
+    }
+
+    // Validación para "otro motivo"
+    if (reason === "otro" && additionalInfo.trim() === "") {
+      toast.error("Cuando selecciona 'Otro motivo', debe proporcionar información adicional")
       return
     }
 
@@ -153,22 +159,22 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Reportar a {renterName}</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-md max-h-[500px] overflow-y-auto w-full border rounded-lg shadow-md">
+        <DialogHeader className="pb-2 border-b">
+          <DialogTitle className="text-xl font-semibold text-gray-800">Reportar a {renterName}</DialogTitle>
+          <DialogDescription className="text-sm text-gray-600">
             {getDialogMessage()}
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4 py-4">
+        <div className="space-y-3 py-3 max-h-[300px] overflow-y-auto px-1">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Motivo del reporte</label>
+            <label className="text-sm font-medium text-gray-700">Motivo del reporte</label>
             <Select 
               value={reason} 
               onValueChange={setReason} 
               disabled={hasReportedBefore || reachedDailyLimit}
             >
-              <SelectTrigger>
+              <SelectTrigger className="border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black">
                 <SelectValue placeholder="Seleccione un motivo" />
               </SelectTrigger>
               <SelectContent>
@@ -181,9 +187,9 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
             </Select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Información adicional 
-              <span className="text-xs text-muted-foreground ml-2">
+            <label className="text-sm font-medium text-gray-700 flex justify-between items-center">
+              <span>Información adicional</span> 
+              <span className="text-xs text-gray-500">
                 ({additionalInfo.length}/{maxLength} caracteres)
               </span>
             </label>
@@ -191,21 +197,40 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
               placeholder="Proporcione detalles adicionales sobre el reporte..."
               value={additionalInfo}
               onChange={handleAdditionalInfoChange}
-              rows={4}
+              rows={3}
               maxLength={maxLength}
-              className="resize-none"
+              className="resize-none w-full overflow-auto break-all max-h-[80px] whitespace-pre-wrap text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black" 
               disabled={hasReportedBefore || reachedDailyLimit}
+              style={{ 
+                wordWrap: "break-word", 
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+                whiteSpace: "pre-wrap",
+                textOverflow: "ellipsis"
+              }}
             />
+            {reason === "otro" && (
+              <p className="text-xs text-amber-600 flex items-center mt-1">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Este motivo requiere información adicional
+              </p>
+            )}
           </div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
+        <DialogFooter className="pt-2 border-t flex gap-2 justify-end">
+          <Button 
+            variant="outline" 
+            onClick={() => setIsOpen(false)} 
+            disabled={isSubmitting}
+            className="border-gray-300 text-gray-700 hover:bg-gray-50"
+          >
             Cancelar
           </Button>
           <Button 
             onClick={handleSubmit} 
             disabled={isSubmitting || hasReportedBefore || reachedDailyLimit}
             variant={hasReportedBefore || reachedDailyLimit ? "destructive" : "default"}
+            className={hasReportedBefore || reachedDailyLimit ? "bg-red-500 text-white" : "bg-black text-white hover:bg-gray-800"}
           >
             {isSubmitting ? (
               <>
