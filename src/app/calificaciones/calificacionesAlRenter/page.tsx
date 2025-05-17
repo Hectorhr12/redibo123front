@@ -767,7 +767,7 @@ export default function CalificacionesAlRenterPage() {
                             <div className="rating-score-label">Puntuación final</div>
                             <div className="rating-score-value">
                               <span className="rating-score-number">{calcularPromedio().toFixed(1)}</span>
-                              <span className="rating-score-star">★</span>
+                              <span className="rating-score-star text-black">★</span>
                             </div>
                             <div className="rating-stars-display">
                               {[1, 2, 3, 4, 5].map((star) => (
