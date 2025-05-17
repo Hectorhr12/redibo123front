@@ -244,9 +244,9 @@ export default function ComentariosPage() {
     if (hasHalfStar) {
       stars.push(
         <div key="half" className="relative">
-          <Star className="w-4 h-4 text-amber-400" />
+          <Star className="w-4 h-4 text-black" />
           <div className="absolute inset-0 overflow-hidden w-[50%]">
-            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+            <Star className="w-4 h-4 fill-black text-black" />
           </div>
         </div>
       );
