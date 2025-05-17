@@ -621,7 +621,7 @@ export default function CalificacionesAlRenterPage() {
                                             <span
                                               key={star}
                                               className="star-icon-small"
-                                              style={{ color: star <= Math.round(promedio) ? "#facc15" : "#e5e7eb" }}
+                                              style={{ color: star <= Math.round(promedio) ? "#000000" : "#e5e7eb" }}
                                             >
                                               ★
                                             </span>
@@ -774,7 +774,7 @@ export default function CalificacionesAlRenterPage() {
                                 <span
                                   key={star}
                                   className="star-icon-large"
-                                  style={{ color: star <= Math.round(calcularPromedio()) ? "#facc15" : "#e5e7eb" }}
+                                  style={{ color: star <= Math.round(calcularPromedio()) ? "#000000" : "#e5e7eb" }}
                                 >
                                   ★
                                 </span>
@@ -810,7 +810,7 @@ export default function CalificacionesAlRenterPage() {
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
-                                      color: star <= rating.comportamiento ? "#facc15" : "#e5e7eb",
+                                      color: star <= rating.comportamiento ? "#000000" : "#e5e7eb",
                                     }}
                                   >
                                     ★
@@ -845,7 +845,7 @@ export default function CalificacionesAlRenterPage() {
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
-                                      color: star <= rating.cuidado_vehiculo ? "#facc15" : "#e5e7eb",
+                                      color: star <= rating.cuidado_vehiculo ? "#000000" : "#e5e7eb",
                                     }}
                                   >
                                     ★
@@ -880,7 +880,7 @@ export default function CalificacionesAlRenterPage() {
                                         estaDentroDePeriodoCalificacion(selected.fechaFin?.toString() || "")
                                           ? "pointer"
                                           : "default",
-                                      color: star <= rating.puntualidad ? "#facc15" : "#e5e7eb",
+                                      color: star <= rating.puntualidad ? "#000000" : "#e5e7eb",
                                     }}
                                   >
                                     ★
