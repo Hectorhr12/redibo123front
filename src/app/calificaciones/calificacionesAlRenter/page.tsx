@@ -237,7 +237,7 @@ export default function CalificacionesAlRenterPage() {
               carImage,
               bloqueado: false,
               carMake: rental.carro?.marca,
-              carModel: rental.carro?.model,
+              carModel: rental.carro?.modelo,
             })
           }
           return acc
