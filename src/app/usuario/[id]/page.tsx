@@ -220,9 +220,9 @@ export default function RenterDetails() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-4rem)]">
+      <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] bg-white text-black">
         <div className="text-center">
-          <AlertCircle className="h-12 w-12 mx-auto text-red-500" />
+          <AlertCircle className="h-12 w-12 mx-auto text-black" />
           <h2 className="mt-4 text-xl font-semibold">{error}</h2>
           <p className="mt-2 text-muted-foreground">
             {error === "No se encontraron arrendatarios en la base de datos."
@@ -230,7 +230,7 @@ export default function RenterDetails() {
               : "Por favor, intente nuevamente más tarde."}
           </p>
           {error === "No se encontraron arrendatarios en la base de datos." && (
-            <Button className="mt-4" variant="outline" asChild>
+            <Button className="mt-4 border border-black text-black hover:bg-gray-100" variant="outline" asChild>
               <Link href="/add-renter">
                 <UserPlus className="mr-2 h-4 w-4" />
                 Agregar Arrendatario
@@ -244,9 +244,9 @@ export default function RenterDetails() {
 
   if (!renterDetails) {
     return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-4rem)]">
+      <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] bg-white text-black">
         <div className="text-center">
-          <AlertCircle className="h-12 w-12 mx-auto text-red-500" />
+          <AlertCircle className="h-12 w-12 mx-auto text-black" />
           <h2 className="mt-4 text-xl font-semibold">No se pudo cargar la información del arrendatario</h2>
           <p className="mt-2 text-muted-foreground">Por favor, intente nuevamente más tarde.</p>
         </div>
@@ -303,7 +303,7 @@ export default function RenterDetails() {
 
                 {/* Verificado */}
                 <div className="mb-4">
-                  <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium">
+                  <span className="inline-block px-3 py-1 rounded-full bg-gray-100 text-black text-sm font-medium">
                     Verificado
                   </span>
                 </div>
@@ -315,7 +315,7 @@ export default function RenterDetails() {
                 >
                   <Button
                     variant="outline"
-                    className="w-full border-red-200 text-red-500 hover:bg-red-50 flex items-center justify-center"
+                    className="w-full border border-black text-black hover:bg-gray-100 flex items-center justify-center"
                   >
                     <Flag className="h-4 w-4 mr-2" />
                     Reportar perfil
@@ -461,3 +461,4 @@ export default function RenterDetails() {
     </ToastProvider>
   )
 }
+
