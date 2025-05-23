@@ -139,7 +139,7 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
   const getDialogMessage = () => {
     if (hasReportedBefore) {
       return (
-        <div className="mt-2 flex items-center text-red-500 text-sm">
+        <div className="mt-2 flex items-center text-black text-sm">
           <AlertCircle className="h-4 w-4 mr-2" />
           Ya has reportado a este usuario anteriormente. No puedes enviar múltiples reportes al mismo usuario.
         </div>
@@ -147,7 +147,7 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
     }
     if (reachedDailyLimit) {
       return (
-        <div className="mt-2 flex items-center text-red-500 text-sm">
+        <div className="mt-2 flex items-center black text-sm">
           <AlertCircle className="h-4 w-4 mr-2" />
           Has alcanzado el límite de reportes por día (2 reportes/24 horas).
         </div>
@@ -199,7 +199,7 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
               onChange={handleAdditionalInfoChange}
               rows={3}
               maxLength={maxLength}
-              className="resize-none w-full overflow-auto break-all max-h-[80px] whitespace-pre-wrap text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black" 
+              className="resize-none w-full overflow-auto break-all max-h-[80px] whitespace-pre-wrap text-sm border border-black rounded-md focus:ring-1 focus:ring-black focus:border-black"
               disabled={hasReportedBefore || reachedDailyLimit}
               style={{ 
                 wordWrap: "break-word", 
@@ -210,8 +210,8 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
               }}
             />
             {reason === "otro" && (
-              <p className="text-xs text-amber-600 flex items-center mt-1">
-                <AlertCircle className="h-3 w-3 mr-1" />
+              <p className="text-xs text-black flex items-center mt-1">
+                <AlertCircle className="h-3 w-3 mr-1 text-black" />
                 Este motivo requiere información adicional
               </p>
             )}
@@ -222,7 +222,7 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
             variant="outline" 
             onClick={() => setIsOpen(false)} 
             disabled={isSubmitting}
-            className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            className="border-black text-black bg-white hover:bg-black hover:text-white"
           >
             Cancelar
           </Button>
@@ -230,7 +230,7 @@ export default function ReportProfileDialog({ children, renterId, renterName }: 
             onClick={handleSubmit} 
             disabled={isSubmitting || hasReportedBefore || reachedDailyLimit}
             variant={hasReportedBefore || reachedDailyLimit ? "destructive" : "default"}
-            className={hasReportedBefore || reachedDailyLimit ? "bg-red-500 text-white" : "bg-black text-white hover:bg-gray-800"}
+            className={hasReportedBefore || reachedDailyLimit ? "bg-black text-white"    : "bg-white text-black hover:bg-black hover:text-white"}
           >
             {isSubmitting ? (
               <>
