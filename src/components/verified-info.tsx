@@ -19,9 +19,9 @@ export default function VerifiedInfo({ name, verifiedItems }: VerifiedInfoProps)
         <h3 className="font-medium mb-3">Información verificada</h3>
         <div className="space-y-2">
           <div className="flex items-center">
-            <div className={`mr-2 ${verifiedItems.identity ? "text-green-500" : "text-gray-300"}`}>
+            <div className={`mr-2 ${verifiedItems.identity ? "text-black":"text-gray-300"}`}>
               {verifiedItems.identity ? (
-                <Shield className="h-4 w-4 fill-green-500" />
+                <Shield className="h-4 w-4 fill-black" />
               ) : (
                 <AlertCircle className="h-4 w-4" />
               )}
@@ -32,8 +32,8 @@ export default function VerifiedInfo({ name, verifiedItems }: VerifiedInfoProps)
           </div>
 
           <div className="flex items-center">
-            <div className={`mr-2 ${verifiedItems.email ? "text-green-500" : "text-gray-300"}`}>
-              {verifiedItems.email ? <Mail className="h-4 w-4 fill-green-500" /> : <AlertCircle className="h-4 w-4" />}
+            <div className={`mr-2 ${verifiedItems.email ? "text-black" : "text-gray-300"}`}>
+              {verifiedItems.email ? <Mail className="h-4 w-4 fill-black"/> : <AlertCircle className="h-4 w-4" />}
             </div>
             <span className="text-sm">
               {verifiedItems.email ? "Correo electrónico verificado" : "Correo electrónico no verificado"}
@@ -41,8 +41,8 @@ export default function VerifiedInfo({ name, verifiedItems }: VerifiedInfoProps)
           </div>
 
           <div className="flex items-center">
-            <div className={`mr-2 ${verifiedItems.phone ? "text-green-500" : "text-gray-300"}`}>
-              {verifiedItems.phone ? <Phone className="h-4 w-4 fill-green-500" /> : <AlertCircle className="h-4 w-4" />}
+            <div className={`mr-2 ${verifiedItems.phone ? "text-black" : "text-gray-300"}`}>
+              {verifiedItems.phone ? <Phone className="h-4 w-4 fill-black" /> : <AlertCircle className="h-4 w-4" />}
             </div>
             <span className="text-sm">
               {verifiedItems.phone ? "Número de teléfono verificado" : "Número de teléfono no verificado"}
