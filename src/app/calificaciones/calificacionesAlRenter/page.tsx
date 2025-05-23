@@ -84,24 +84,17 @@ export default function CalificacionesAlRenterPage() {
 
       // Agregar palabras adicionales al diccionario
       leoProfanity.add([
-        "puta",
-        "mierda",
-        "cabrón",
-        "joder",
-        "coño",
-        "gilipollas",
-        "capullo",
-        "idiota",
-        "imbécil",
-        "pendejo",
-        "marica",
-        "maricón",
-        "cojones",
-        "hostia",
-        "hijo de puta",
-        "hijoputa",
-        "malparido",
-        "cabron",
+        "puta","mierda",        "cabrón","joder",        "coño",
+        "gilipollas",        "capullo",        "idiota",        "imbécil",
+        "pendejo",        "marica",        "maricón",        "cojones",
+        "hostia",        "hijo de puta",        "hijoputa",        "malparido",
+        "cabron",         "pendeja",        "pendejas",	"pendejos",        "pendejadas",
+        "Huevón", "boludo","pelotudo","Empobrecedo","Zorra","pelagato","Analfabeto",
+        "ignorante","palurdo","berzotas","gaznápiro",
+        "papanatas","papanatas","papanatas","papanatas",
+        "Idiota","imbécil","lerdo","mameluco","mentecato",
+        " estupido","atontao","orate","loco","subnormal","deficiente","majadero","zoquete",
+        "Puto","puta","perra","cabron","HDP","pt","puto","puta",
       ])
     } catch (error) {
       console.error("Error al cargar el diccionario:", error)
