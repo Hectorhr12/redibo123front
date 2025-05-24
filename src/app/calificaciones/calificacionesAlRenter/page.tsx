@@ -885,10 +885,10 @@ export default function CalificacionesAlRenterPage() {
                         </div>
 
                         {/* Añadir después de la última categoría (puntualidad) y antes de los botones de acción */}
-                        <div className="rating-category">
-                          <h4 className="mb-2 font-medium text-gray-700">Comentario general</h4>
+                        <div className="rating-category flex flex-col sm:flex-row sm:items-start sm:gap-4">
+                          <h4 className="mb-2 sm:mb-0 font-medium text-gray-700 sm:w-1/4">Comentario general</h4>
                           <textarea
-                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                            className="w-full sm:w-3/4 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                             placeholder="Añade un comentario general sobre tu experiencia con este arrendatario..."
                             value={rating.comentario}
                             onChange={(e) => {
